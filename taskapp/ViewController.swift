@@ -90,9 +90,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        taskArray = try! Realm().objects(Task.self)
-                .sorted(byKeyPath: "date", ascending: true)
-                .filter("category == %@", searchText)
+        if searchText.isEmpty || searchText == "" {
+            taskArray = try! Realm().objects(Task.self)
+                    .sorted(byKeyPath: "date", ascending: true)
+        }else {
+            taskArray = try! Realm().objects(Task.self)
+                    .sorted(byKeyPath: "date", ascending: true)
+                    .filter("category == %@", searchText)
+        }
         tableVIew.reloadData()
     }
     
